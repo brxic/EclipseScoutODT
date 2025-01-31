@@ -4,7 +4,7 @@ This repository contains my work from the **Eclipse Scout One Day Tutorial (ODT)
 which I completed as part of a project at work. Since I was new to **Eclipse Scout**,  
 this tutorial helped me get familiar with the framework and its concepts. 
 
-[Official tutorial link](https://eclipsescout.github.io/scout-docs/24.2/getstarted/one-day-tutorial.html) 
+[Official tutorial link](https://eclipsescout.github.io/scout-docs/24.2/getstarted/one-day-tutorial.html)  
 [Demo application](https://scout.bsi-software.com/contacts/)
 
 ## About the Project
