@@ -1,0 +1,73 @@
+# Backupfiles from mergetools #
+*.orig
+
+# Java Class Files #
+*.class
+
+# Package Files (note: there are similar directories, keep those) #
+*.jar
+*.war
+!*.war/
+*.ear
+!*.ear/
+*.zip
+
+*.log
+
+# DebugClasses
+*_gitignore.js
+*_gitignore.java
+
+# Local configuration
+launch.properties_template
+launch_devtest.properties_template
+# <customized>
+# remote db debugging launch configuration
+launch_remote_db.properties
+# </customized>
+
+
+# Logback DEV includes
+logback-include.xml
+
+# IntelliJ IDEA #
+/.idea/**/workspace.xml
+/.idea/**/tasks.xml
+/.idea/.name
+/.idea/**/modules.xml
+/.idea/**/usage.statistics.xml
+/.idea/**/dataSources.local.xml
+/.idea/**/jarRepositories.xml
+/.idea/**/encodings.xml
+/.idea/**/uiDesigner.xml
+/.idea/**/shelf
+/.idea/sonarlint
+/.idea/**/dataSources/
+/.idea/httpRequests/
+/.idea/libraries/
+/.idea/artifacts/
+# <customized>
+/.idea/**/git_toolbox_prj.xml
+# </customized>
+*.iml
+
+# Maven #
+target/
+.surefire-*
+.flattened-pom.xml
+
+# node
+/node_modules/
+/*/node_modules/
+# <customized>
+/*/dist/
+# </customized>
+/*/test-results/
+pnpm-lock.yaml
+
+# <customized>
+# OpenAPI Generator
+/gen/
+/http_requests/http-client.private.env.json
+# </customized>
+/docker/local_setup/customer_suite/cx_volumes/*/*

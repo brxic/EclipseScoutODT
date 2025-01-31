@@ -1,0 +1,3 @@
+packages:
+- '.'
+- 'contacts.ui.html'

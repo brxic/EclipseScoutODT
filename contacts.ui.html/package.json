@@ -1,0 +1,40 @@
+{
+  "name": "@contacts/ui",
+  "version": "1.0.0-SNAPSHOT",
+  "engines": {
+    "node": ">=20.10.0",
+    "npm": ">=10.2.3",
+    "pnpm": ">=8.11.0"
+  },
+  "main": "./src/main/js/index.ts",
+  "files": [
+    "src/main/resources/WebContent",
+    "src/main/js",
+    "target/dist"
+  ],
+  "scripts": {
+    "pnpm-install": "pnpm install --ignore-scripts",
+    "testserver:start": "scout-scripts test-server:start",
+    "testserver:stop": "scout-scripts test-server:stop",
+    "test:ci": "scout-scripts test:ci",
+    "build:dev": "scout-scripts build:dev",
+    "build:prod": "scout-scripts build:prod",
+    "build:all": "scout-scripts build:dev && scout-scripts build:prod",
+    "build:dev:watch": "scout-scripts build:dev:watch",
+    "cleanup:snapshots": "releng-scripts cleanup:snapshots",
+    "version:snapshot:dependencies": "releng-scripts version:snapshot:dependencies",
+    "version:snapshot": "releng-scripts version:snapshot",
+    "version:release:dependencies": "releng-scripts version:release:dependencies",
+    "version:release": "releng-scripts version:release"
+  },
+  "devDependencies": {
+    "@eclipse-scout/cli": "24.2.16",
+    "@eclipse-scout/releng": "^24.1.0",
+    "@eclipse-scout/tsconfig": "24.2.16",
+    "@types/jquery": "3.5.29"
+  },
+  "dependencies": {
+    "@eclipse-scout/core": "24.2.16",
+    "jquery": "3.7.1"
+  }
+}

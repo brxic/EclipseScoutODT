@@ -1,0 +1,12 @@
+{
+  "name": "@contacts/root",
+  "version": "1.0.0-SNAPSHOT",
+  "private": true,
+  "scripts": {
+    "pnpm-install": "pnpm install --ignore-scripts"
+  },
+  "dependencies": {
+    "eslint": "8.55.0",
+    "@eclipse-scout/eslint-config": "24.2.16"
+  }
+}

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.scout.apps</groupId>
+    <artifactId>contacts-root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>contacts</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+    <org.eclipse.scout.apps.contacts.version>${project.version}</org.eclipse.scout.apps.contacts.version>
+    <jdk.source.version>17</jdk.source.version>
+    <org.eclipse.scout.rt.version>24.2.16</org.eclipse.scout.rt.version>
+    <master_npm_release_dependency_mapping>--mapping.0.regex=@eclipse-scout --mapping.0.version=${org.eclipse.scout.rt.version}</master_npm_release_dependency_mapping>
+    <master_skip_npm_build_dev>true</master_skip_npm_build_dev>
+    <master_skip_npm_build_prod>true</master_skip_npm_build_prod>
+
+    <!-- docker image build settings -->
+    <!-- build target (push) -->
+    <docker.app.image.registry>localhost:5000</docker.app.image.registry> <!-- set a desired registry before using profile exec.docker.image (e.g. registry.hub.docker.com/yourusername) -->
+    <docker.app.image.tag>1.0.0-latest</docker.app.image.tag>
+    <!-- java source image (pull) -->
+    <docker.java.image.name>eclipse-temurin</docker.java.image.name>
+    <docker.java.image.tag>17-jdk-jammy</docker.java.image.tag>
+    <docker.java.image>${docker.java.image.name}:${docker.java.image.tag}</docker.java.image>
+  </properties>
+
+  <modules>
+    <module>../contacts.shared</module>
+    <module>../contacts.server</module>
+    <module>../contacts.client</module>
+    <module>../contacts.server.app</module>
+    <module>../contacts.server.app.dev</module>
+    <module>../contacts.server.app.image</module>
+    <module>../contacts.server.app.zip</module>
+    <module>../contacts.ui.html</module>
+    <module>../contacts.ui.html.app</module>
+    <module>../contacts.ui.html.app.dev</module>
+    <module>../contacts.ui.html.app.image</module>
+    <module>../contacts.ui.html.app.zip</module>
+  </modules>
+
+  <profiles>
+    <profile>
+      <!-- required for .app.image module to apply filtering on config.properties -->
+      <id>filter.config.property</id>
+      <activation>
+        <file>
+          <exists>${basedir}${file.separator}src${file.separator}main${file.separator}resources${file.separator}config.properties</exists>
+        </file>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>${project.basedir}${file.separator}src${file.separator}main${file.separator}resources</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <!--  set property docker.app.image.registry before activating profile -->
+      <id>exec.docker.image</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <!-- phase binding required for .app.image module to build and publish docker image -->
+              <groupId>com.google.cloud.tools</groupId>
+              <artifactId>jib-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>build</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Scout Dependencies -->
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt</artifactId>
+        <version>${org.eclipse.scout.rt.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Application Dependencies -->
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.client</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.shared</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.server</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.server.app</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.server.app.dev</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.server.app.image</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.server.app.zip</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.ui.html</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.ui.html.app</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.ui.html.app.dev</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.ui.html.app.image</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.apps</groupId>
+        <artifactId>contacts.ui.html.app.zip</artifactId>
+        <version>${org.eclipse.scout.apps.contacts.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
